@@ -15,81 +15,81 @@ import javax.swing.JPanel;
 
 
 public class GamePanel extends JPanel implements ActionListener{
-	private static JFrame frame;
-	private JButton b[][] = new JButton[3][3];
-	private State currentState;
-	private int turn;
+    private static JFrame frame;
+    private JButton b[][] = new JButton[3][3];
+    private State currentState;
+    private int turn;
 
-	public GamePanel() {
-		turn = 1;
+    public GamePanel() {
+        turn = 1;
 
-		showBoardGui();
-	}
+        showBoardGui();
+    }
 
-	public void createAndShowGui() {
-		// Create the tiles
-		this.removeAll();
-		for(int i=0; i<3; i++){
-			for(int j=0; j<3; j++){
-				b[i][j].setText("");
-				b[i][j].addActionListener(this);
-				add(b[i][j]);
-			}
-		}
+    public void createAndShowGui() {
+        // Create the tiles
+        this.removeAll();
+        for(int i=0; i<3; i++){
+            for(int j=0; j<3; j++){
+                b[i][j].setText("");
+                b[i][j].addActionListener(this);
+                add(b[i][j]);
+            }
+        }
 
-		// Creates the Button Panel
-		JPanel buttonHolder = new JPanel();
-		buttonHolder.setOpaque(true);
+        // Creates the Button Panel
+        JPanel buttonHolder = new JPanel();
+        buttonHolder.setOpaque(true);
 
-		// Creates the Board
-		this.setLayout(new GridLayout(3,3));
-		this.setOpaque(true);
-		this.setBackground(new Color(224, 255, 255));
+        // Creates the Board
+        this.setLayout(new GridLayout(3,3));
+        this.setOpaque(true);
+        this.setBackground(new Color(224, 255, 255));
 
-		// Creates the content panel
-		JPanel content = new JPanel();
-		content.setLayout(new BorderLayout());
-		content.add(this, BorderLayout.CENTER);
-		content.add(buttonHolder, BorderLayout.SOUTH);
+        // Creates the content panel
+        JPanel content = new JPanel();
+        content.setLayout(new BorderLayout());
+        content.add(this, BorderLayout.CENTER);
+        content.add(buttonHolder, BorderLayout.SOUTH);
 
-		// Creates the window
-		frame = new JFrame("Tic Tac Toe");
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setPreferredSize(new Dimension(500, 560));
-		frame.setContentPane(content);
-		frame.setResizable(false);
-		frame.pack();
-		frame.setVisible(true);
-	}
+        // Creates the window
+        frame = new JFrame("Tic Tac Toe");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setPreferredSize(new Dimension(500, 560));
+        frame.setContentPane(content);
+        frame.setResizable(false);
+        frame.pack();
+        frame.setVisible(true);
+    }
 
-	public void actionPerformed(ActionEvent e) {
-		int temp;
+    public void actionPerformed(ActionEvent e) {
+        int temp;
 
-		for (int i = 0; i < 3; i++) {
-			for (int j = 0; j < 3; j++) {
-				if(b[i][j].equals(e.getSource())){
-					if (((JButton)e.getSource()).getText() == "") {
-						if (turn == 1)
-							((JButton)e.getSource()).setText("X");
-						else 
-							((JButton)e.getSource()).setText("O");
-					}
-				}
-			}
-		}
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                if(b[i][j].equals(e.getSource())){
+                    if (((JButton)e.getSource()).getText() == "") {
+                        if (turn == 1)
+                            ((JButton)e.getSource()).setText("X");
+                        else
+                            ((JButton)e.getSource()).setText("O");
+                    }
+                }
+            }
+        }
 
-		if (turn == 1) turn = 0;
-		else turn = 1;
-	}
+        if (turn == 1) turn = 0;
+        else turn = 1;
+    }
 
-	private void showBoardGui(){
-		for(int i = 0; i < 3; i++){
-			for(int j = 0; j < 3; j++){
-				b[i][j] = new JButton();
-				b[i][j].setFont(new Font("Arial", Font.PLAIN, 40));
-				b[i][j].setBackground(new Color(64, 224, 208));
-			}
-		}
-	}
+    private void showBoardGui(){
+        for(int i = 0; i < 3; i++){
+            for(int j = 0; j < 3; j++){
+                b[i][j] = new JButton();
+                b[i][j].setFont(new Font("Arial", Font.PLAIN, 40));
+                b[i][j].setBackground(new Color(64, 224, 208));
+            }
+        }
+    }
 
 }

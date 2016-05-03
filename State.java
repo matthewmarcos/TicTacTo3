@@ -5,10 +5,10 @@ import javax.swing.JButton;
 
 
 public class State {
-	public int[][] state;
-	public int utility;
+    public int[][] state;
+    public int utility;
 
-	public State(){
-		this.state = new int[3][3];
-	}
+    public State(){
+        this.state = new int[3][3];
+    }
 }
