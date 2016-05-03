@@ -4,5 +4,4 @@ public class TicTacToe {
         GamePanel game = new GamePanel();
         game.createAndShowGui();
     }
-
 }

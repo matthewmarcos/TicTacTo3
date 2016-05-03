@@ -29,9 +29,12 @@ public class GamePanel extends JPanel implements ActionListener{
     public void createAndShowGui() {
         // Create the tiles
         this.removeAll();
+
+        currentState = new State();
+        drawBoard();
+
         for(int i=0; i<3; i++){
             for(int j=0; j<3; j++){
-                b[i][j].setText("");
                 b[i][j].addActionListener(this);
                 add(b[i][j]);
             }
@@ -62,21 +65,42 @@ public class GamePanel extends JPanel implements ActionListener{
         frame.setVisible(true);
     }
 
+
+    // Redraws the button
+    private void drawBoard() {
+        for(int i = 0; i < 3; i++){
+            for(int j = 0; j < 3; j++){
+                b[i][j].setText(currentState.getState()[i][j]);
+            }
+        }
+    }
+
     public void actionPerformed(ActionEvent e) {
         int temp;
 
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 if(b[i][j].equals(e.getSource())){
-                    if (((JButton)e.getSource()).getText() == "") {
-                        if (turn == 1)
-                            ((JButton)e.getSource()).setText("X");
-                        else
-                            ((JButton)e.getSource()).setText("O");
+                    if (((JButton)e.getSource()).getText().equals("")) {
+                        if (turn == 1) {
+                            System.out.println("X NA DAPAT");
+                            // ((JButton)e.getSource()).setText("X");
+                            this.currentState = new State(currentState, i, j, "X");
+                        }
+                        else {
+                            System.out.println("O NA DAPAT");
+                            // ((JButton)e.getSource()).setText("O");
+                            this.currentState = new State(currentState, i, j, "O");
+                        }
                     }
                 }
             }
         }
+
+        if(!currentState.getWinner().equals("")) {
+            System.out.println(currentState.getWinner());
+        }
+        drawBoard();
 
         if (turn == 1) turn = 0;
         else turn = 1;
@@ -91,5 +115,4 @@ public class GamePanel extends JPanel implements ActionListener{
             }
         }
     }
-
 }
