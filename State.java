@@ -38,7 +38,6 @@ public class State {
         }
         else {
             // Error!
-            System.out.println("Already has a value");
         }
     }
 
@@ -61,10 +60,39 @@ public class State {
 
             winner = checkWinner(value);
             if(!winner.equals("")) {
-                System.out.println("Winner: " + winner);
                 return winner;
             }
         }
+
+        // Check Columns
+        for (int i = 0 ; i < 3 ; i++) {
+            winner = "";
+            value = "";
+
+            for(int j = 0 ; j < 3 ; j++) {
+                value += this.state[j][i];
+            }
+
+            winner = checkWinner(value);
+            if(!winner.equals("")) {
+                return winner;
+            }
+        }
+
+        // Check backslash
+        value = this.state[0][0] + this.state[1][1] + this.state[2][2];
+        winner = checkWinner(value);
+        if(!winner.equals("")) {
+            return winner;
+        }
+
+        // Check slash
+        value = this.state[0][2] + this.state[1][1] + this.state[2][0];
+        winner = checkWinner(value);
+        if(!winner.equals("")) {
+            return winner;
+        }
+
 
         return "";
     }
