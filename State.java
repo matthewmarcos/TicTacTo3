@@ -8,6 +8,7 @@ public class State {
     private String[][] state;
     private int utility;
     private State parent;
+    private String turn;
 
     public State() {
         this.state = new String[3][3];
@@ -18,10 +19,15 @@ public class State {
                 this.state[i][j] = "";
             }
         }
-
-
     }
 
+    /*
+        Public constructor
+        @Params:
+            State parent: Preceding state
+            int x, y: Coordinates of new move
+            String value: value of the new move -> Also add to turn.
+    */
     public State(State parent, int x, int y, String value) {
         this.state = new String[3][3];
         this.parent = parent;
@@ -32,13 +38,35 @@ public class State {
             }
         }
 
-        // Dapat ang linalagyang x and y ay walang laman
+        // [x][y] should have nothing in it
         if(this.state[x][y].equals("")) {
             this.state[x][y] = new String(value);
+            this.turn = new String(value);
         }
         else {
-            // Error!
+            // [x][y] already has a value
         }
+    }
+
+    /*
+        Public Method printMe():
+        - Prints the details to console for better debug
+    */
+    public void printMe() {
+        System.out.println("");
+        System.out.println("");
+        System.out.println("Turn: " + this.turn);
+        System.out.println("Utility: " + this.utility);
+
+        for(int i = 0 ; i < 3 ; i++) {
+            for(int j = 0 ; j < 3 ; j++) {
+                System.out.print(this.state[i][j]);
+            }
+        }
+    }
+
+    public String getTurn() {
+        return new String(this.turn);
     }
 
     public String[][] getState() {
@@ -92,7 +120,6 @@ public class State {
         if(!winner.equals("")) {
             return winner;
         }
-
 
         return "";
     }

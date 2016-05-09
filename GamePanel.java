@@ -22,7 +22,6 @@ public class GamePanel extends JPanel implements ActionListener{
 
     public GamePanel() {
         turn = 1;
-
         showBoardGui();
     }
 
