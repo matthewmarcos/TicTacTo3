@@ -2,9 +2,7 @@
 
 ### Instructions
 
-1. `javac *.java`
-1. `java TicTacToe`
-
+1. `./run`
 
 ### By:
 - Joseph Matthew Marcos
