@@ -79,13 +79,18 @@ public class GamePanel extends JPanel implements ActionListener{
 
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
+
+                // Linear search for the button that got clicked
+
                 if(b[i][j].equals(e.getSource())){
                     if (((JButton)e.getSource()).getText().equals("")) {
                         if (turn == 1) {
                             this.currentState = new State(currentState, i, j, "X");
+                            this.currentState.printMe();
                         }
                         else {
                             this.currentState = new State(currentState, i, j, "O");
+                            this.currentState.printMe();
                         }
                     }
                 }
