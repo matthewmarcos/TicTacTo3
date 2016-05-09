@@ -71,6 +71,24 @@ public class State {
         }
     }
 
+    public ArrayList<State> getPossibleStates() {
+        ArrayList<State> tempStates = new ArrayList<State>();
+
+        // State constructor
+        // Get blank indeces
+        String nextTurn = (this.turn.equals("X")) ? "O": "X";
+
+        for(int i = 0 ; i < 3 ; i++) {
+            for(int j = 0 ; j < 3 ; j++) {
+                if(this.state[i][j].equals("")) {
+                    tempStates.add(new State(this, i, j, nextTurn));
+                }
+            }
+        }
+
+        return tempStates;
+    }
+
     public String getTurn() {
         return new String(this.turn);
     }

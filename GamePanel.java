@@ -86,11 +86,15 @@ public class GamePanel extends JPanel implements ActionListener{
                     if (((JButton)e.getSource()).getText().equals("")) {
                         if (turn == 1) {
                             this.currentState = new State(currentState, i, j, "X");
-                            this.currentState.printMe();
+                            // this.currentState.printMe();
+                            // System.out.println("childrenStates:");
+                            // for(State f: this.currentState.getPossibleStates()) {
+                            //     f.printMe();
+                            // }
                         }
                         else {
                             this.currentState = new State(currentState, i, j, "O");
-                            this.currentState.printMe();
+                            // this.currentState.printMe();
                         }
                     }
                 }
