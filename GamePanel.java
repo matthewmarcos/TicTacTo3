@@ -81,11 +81,13 @@ public class GamePanel extends JPanel implements ActionListener{
             for (int j = 0; j < 3; j++) {
 
                 // Linear search for the button that got clicked
-
                 if(b[i][j].equals(e.getSource())){
                     if (((JButton)e.getSource()).getText().equals("")) {
                         if (turn == 1) {
                             this.currentState = new State(currentState, i, j, "X");
+
+                            // Code prints the next possible moves
+
                             // this.currentState.printMe();
                             // System.out.println("childrenStates:");
                             // for(State f: this.currentState.getPossibleStates()) {
@@ -101,13 +103,14 @@ public class GamePanel extends JPanel implements ActionListener{
             }
         }
 
-        if(!currentState.getWinner().equals("")) {
-            System.out.println(currentState.getWinner());
-        }
         drawBoard();
 
-        if (turn == 1) turn = 0;
-        else turn = 1;
+        String winner = currentState.getWinner();
+        if(!winner.equals("")) {
+            JOptionPane.showMessageDialog(null, "Winner: " + winner);
+        }
+
+        turn = (turn == 1) ? 0: 1;
     }
 
     private void showBoardGui(){
