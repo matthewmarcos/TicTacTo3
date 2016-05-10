@@ -4,8 +4,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Point;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import javax.swing.JButton;
@@ -29,7 +28,7 @@ public class GamePanel extends JPanel implements ActionListener{
         // Create the tiles
         this.removeAll();
 
-        currentState = new State();
+        resetState();
         drawBoard();
 
         for(int i=0; i<3; i++){
@@ -39,11 +38,24 @@ public class GamePanel extends JPanel implements ActionListener{
             }
         }
 
-        // Creates the Button Panel
-        JPanel buttonHolder = new JPanel();
-        buttonHolder.setOpaque(true);
+        // Create the "New Game" button
+        JButton newGameButton = new JButton();
+        newGameButton.setFont(new Font("Arial", Font.PLAIN, 30));
+        newGameButton.setBackground(new Color(64, 224, 208));
+        newGameButton.setText("New Game");
+        newGameButton.setPreferredSize(new Dimension(500, 50));
+        newGameButton.addMouseListener(new MouseListener() {
+            public void mouseClicked(MouseEvent ev){
+                // Reset state here
+            }
+            public void mousePressed(MouseEvent ev){}
+            public void mouseEntered(MouseEvent ev){}
+            public void mouseReleased(MouseEvent ev){}
+            public void mouseExited(MouseEvent ev){}
 
-        // Creates the Board
+        });
+
+        // Create the Board Panel Layout
         this.setLayout(new GridLayout(3,3));
         this.setOpaque(true);
         this.setBackground(new Color(224, 255, 255));
@@ -52,12 +64,12 @@ public class GamePanel extends JPanel implements ActionListener{
         JPanel content = new JPanel();
         content.setLayout(new BorderLayout());
         content.add(this, BorderLayout.CENTER);
-        content.add(buttonHolder, BorderLayout.SOUTH);
+        content.add(newGameButton, BorderLayout.SOUTH);
 
         // Creates the window
         frame = new JFrame("Tic Tac Toe");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setPreferredSize(new Dimension(500, 560));
+        frame.setPreferredSize(new Dimension(500, 580));
         frame.setContentPane(content);
         frame.setResizable(false);
         frame.pack();
@@ -74,30 +86,28 @@ public class GamePanel extends JPanel implements ActionListener{
         }
     }
 
+    public void resetState() {
+        currentState = new State();
+    }
+
     public void actionPerformed(ActionEvent e) {
         int temp;
 
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
 
+
                 // Linear search for the button that got clicked
-                if(b[i][j].equals(e.getSource())){
-                    if (((JButton)e.getSource()).getText().equals("")) {
-                        if (turn == 1) {
-                            this.currentState = new State(currentState, i, j, "X");
+                if(b[i][j].equals(e.getSource()) &&
+                ((JButton)e.getSource()).getText().equals("")){
+                    String character = (turn == 1) ? "X" : "O";
+                    this.currentState = new State(currentState, i, j, character);
 
-                            // Code prints the next possible moves
-
-                            // this.currentState.printMe();
-                            // System.out.println("childrenStates:");
-                            // for(State f: this.currentState.getPossibleStates()) {
-                            //     f.printMe();
-                            // }
-                        }
-                        else {
-                            this.currentState = new State(currentState, i, j, "O");
-                            // this.currentState.printMe();
-                        }
+                    // Code prints the next possible moves
+                    this.currentState.printMe();
+                    System.out.println("childrenStates:");
+                    for(State f: this.currentState.getPossibleStates()) {
+                        f.printMe();
                     }
                 }
             }
