@@ -9,10 +9,12 @@ public class State {
     private int height;
     private State parent;
     private String turn;
+    private ArrayList<State> children;
 
     public State() {
         this.state = new String[3][3];
         this.parent = null;
+        this.children = null;
         this.height = 0;
 
         for (int i = 0 ; i < 3 ; i++) {
@@ -26,6 +28,7 @@ public class State {
         this.state = new String[3][3];
         this.parent = null;
         this.height = 0;
+        this.children = null;
 
         for (int i = 0 ; i < 3 ; i++) {
             for(int j = 0 ; j < 3 ; j++) {
@@ -43,6 +46,7 @@ public class State {
     */
     public State(State parent, int x, int y, String value) {
         this.state = new String[3][3];
+        this.children = null;
         this.parent = parent;
         this.height = parent.getHeight() + 1;
 
@@ -99,6 +103,8 @@ public class State {
                 }
             }
         }
+
+        this.children = tempStates;
 
         return tempStates;
     }
