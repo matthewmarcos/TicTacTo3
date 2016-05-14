@@ -89,30 +89,13 @@ public class Solver {
             scores.add(temp);
         }
 
-        Collections.sort(expanded, new Comparator<State>(){
-            public int compare(State o1, State o2){
-                if(o1.getHeight() == o2.getHeight()) {
-                    return 0;
-                }
-                return o1.getHeight() < o2.getHeight() ? 1 : -1;
-            }
-        });
-
-        // Sort by utility
-        Collections.sort(expanded, new Comparator<State>(){
-            public int compare(State o1, State o2){
-                if(o1.getUtility() == o2.getUtility())
-                    return 0;
-                return o1.getUtility() < o2.getUtility() ? 1 : -1;
-            }
-        });
-
+        Collections.sort(scores);
 
         if (in.getTurn().equals("X")) {
-            return expanded.get(expanded.size() - 1).getUtility();
+            return scores.get(scores.size() - 1);
         }
         else {
-            return expanded.get(0).getUtility();
+            return scores.get(0);
         }
     }
 
