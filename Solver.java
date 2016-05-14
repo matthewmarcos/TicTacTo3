@@ -28,9 +28,21 @@ public class Solver {
     private static State getNextMove(State in) {
         ArrayList<State> expanded = in.getPossibleStates();
 
+        if(expanded.isEmpty()) {
+            return null;
+        }
+
         for (State state : expanded) {  // Set utility of state
             state.setUtility(minimax(state));
         }
+
+        Collections.sort(expanded, new Comparator<State>(){
+            public int compare(State o1, State o2){
+                if(o1.getHeight() == o2.getHeight())
+                    return 0;
+                return o1.getHeight() < o2.getHeight() ? -1 : 1;
+            }
+        });
 
         // Sort by utility
         Collections.sort(expanded, new Comparator<State>(){
@@ -41,6 +53,11 @@ public class Solver {
             }
         });
 
+        for (State s : expanded) {
+            s.printMe();
+        }
+
+        System.out.println("===================================");
         if (in.getTurn().equals("X")) {
             return expanded.get(0);
         } else {
@@ -50,12 +67,15 @@ public class Solver {
 
     private static int minimax(State in) {
         if (in.isLeafNode()) {
-            if (in.getWinner().equals("X"))
-                return 1;
-            else if (in.getWinner().equals("O"))
+            if (in.getWinner().equals("X")) {
                 return -1;
-
-            else return 0;
+            }
+            else if (in.getWinner().equals("O")) {
+                return 1;
+            }
+            else {
+                return 0;
+            }
         }
 
         ArrayList<State> expanded = new ArrayList<State>();
@@ -71,14 +91,27 @@ public class Solver {
 
         Collections.sort(expanded, new Comparator<State>(){
             public int compare(State o1, State o2){
-                if(o1.getHeight() == o2.getHeight())
+                if(o1.getHeight() == o2.getHeight()) {
                     return 0;
+                }
                 return o1.getHeight() < o2.getHeight() ? 1 : -1;
             }
         });
+
+        // Sort by utility
+        Collections.sort(expanded, new Comparator<State>(){
+            public int compare(State o1, State o2){
+                if(o1.getUtility() == o2.getUtility())
+                    return 0;
+                return o1.getUtility() < o2.getUtility() ? 1 : -1;
+            }
+        });
+
+
         if (in.getTurn().equals("X")) {
             return expanded.get(expanded.size() - 1).getUtility();
-        }  else {
+        }
+        else {
             return expanded.get(0).getUtility();
         }
     }
