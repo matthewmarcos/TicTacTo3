@@ -108,8 +108,6 @@ public class GamePanel extends JPanel implements ActionListener{
     }
 
     public void createBoardGui() {
-        System.out.println(turn);
-
         // Create the tiles
         this.removeAll();
 
