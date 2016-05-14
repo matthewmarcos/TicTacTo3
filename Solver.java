@@ -8,21 +8,79 @@ import javax.swing.*;
 */
 public class Solver {
 
-    public static State nextMove(State in, String turn) {
+    public static State nextMove(State in) {
 
         State currentState = in;
-        ArrayList<State> leafNodes = getLeafNodes(in); 
+       /* ArrayList<State> leafNodes = getNextMove(in); 
 
         // If there is a winning state in that tier, pick it
         for(State f : leafNodes) {
             f.printMe();
         }
 
-        minMaxAlgo(leafNodes, in).printMe();
+        minimax(in).printMe();*/
 
         //System.out.println("length of leafNodes: " + leafNodes.size());
 
-        return new State();
+        return getNextMove(in);
+    }
+
+    private static State getNextMove(State in) {
+        ArrayList<State> expanded = in.getPossibleStates();
+
+        for (State state : expanded) {  // Set utility of state
+            state.setUtility(minimax(state));
+        }
+
+        // Sort by utility
+        Collections.sort(expanded, new Comparator<State>(){
+            public int compare(State o1, State o2){
+                if(o1.getUtility() == o2.getUtility())
+                    return 0;
+                return o1.getUtility() < o2.getUtility() ? 1 : -1;
+            }
+        });
+
+        if (in.getTurn().equals("X")) {
+            return expanded.get(0);
+        } else {
+            return expanded.get(expanded.size() - 1);
+        }
+    }
+
+    private static int minimax(State in) {
+        if (in.isLeafNode()) {
+            if (in.getWinner().equals("X"))
+                return 1;
+            else if (in.getWinner().equals("O"))
+                return -1;
+
+            else return 0;
+        }
+
+        ArrayList<State> expanded = new ArrayList<State>();
+        ArrayList<Integer> scores = new ArrayList<Integer>();
+
+        expanded.addAll(in.getPossibleStates());
+        
+        for (State state : expanded) {
+            int temp = minimax(state);
+            state.setUtility(temp);
+            scores.add(temp);
+        }
+
+        Collections.sort(expanded, new Comparator<State>(){
+            public int compare(State o1, State o2){
+                if(o1.getHeight() == o2.getHeight())
+                    return 0;
+                return o1.getHeight() < o2.getHeight() ? 1 : -1;
+            }
+        });
+        if (in.getTurn().equals("X")) {
+            return expanded.get(expanded.size() - 1).getUtility();
+        }  else {
+            return expanded.get(0).getUtility();
+        }
     }
 
     private static ArrayList<State> getLeafNodes(State in) {
@@ -73,7 +131,7 @@ public class Solver {
         return leafNodes;
     }
 
-    public static State minMaxAlgo(ArrayList<State> leafNodes, State currentState) {
+    public static State minimaxAlgo(ArrayList<State> leafNodes, State currentState) {
         ArrayList<State> parentStore = new ArrayList<State>();
         ArrayList<State> childStore = new ArrayList<State>();
 
