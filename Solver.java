@@ -9,20 +9,10 @@ import javax.swing.*;
 public class Solver {
 
     public static State nextMove(State in, String turn) {
-
         State currentState = in;
         ArrayList<State> leafNodes = getLeafNodes(in); 
 
-        // If there is a winning state in that tier, pick it
-        for(State f : leafNodes) {
-            f.printMe();
-        }
-
-        minMaxAlgo(leafNodes, in).printMe();
-
-        //System.out.println("length of leafNodes: " + leafNodes.size());
-
-        return new State();
+        return minMaxAlgo(leafNodes, in);
     }
 
     private static ArrayList<State> getLeafNodes(State in) {
@@ -77,7 +67,7 @@ public class Solver {
         ArrayList<State> parentStore = new ArrayList<State>();
         ArrayList<State> childStore = new ArrayList<State>();
 
-        while (leafNodes.get(0).getParent() != currentState) {
+        while (leafNodes.get(0).getParent().equals(currentState)) {
             parentStore.clear();
             while (leafNodes.size() > 0) {
                 childStore.clear();
