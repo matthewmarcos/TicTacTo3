@@ -156,11 +156,9 @@ public class GamePanel extends JPanel implements ActionListener{
                 ((JButton)e.getSource()).getText().equals("")){
                     String character = (turn == 1) ? "X" : "O";
                     State resultingState = new State(currentState, i, j, character);
-
-                    // Code prints the next possible moves
-                    resultingState.printMe();
                     this.currentState = resultingState.clone();
-                    Solver.nextMove(resultingState, character);
+                    // Solver.nextMove(resultingState, character);
+
                     turn = (turn == 1) ? 0: 1;
                     System.out.println("==============================================");
                 }
@@ -171,6 +169,7 @@ public class GamePanel extends JPanel implements ActionListener{
 
         String winner = currentState.getWinner();
         if(!winner.equals("")) {
+
             JOptionPane.showMessageDialog(null, "Winner: " + winner);
 
             frame.dispose();

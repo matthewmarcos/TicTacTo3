@@ -38,7 +38,7 @@ public class Solver {
 
             // put leaf nodes from results to leafNodes
             for(State f : results) {
-                if(f.isLeafNode()) {
+                if(f.isLeafNode() || !exists(leafNodes, f)) {
                     leafNodes.add(f);
                 }
             }
@@ -47,8 +47,26 @@ public class Solver {
             results.clear();
         }
 
+        Collections.sort(leafNodes, new Comparator<State>(){
+            public int compare(State o1, State o2){
+                if(o1.getHeight() == o2.getHeight())
+                    return 0;
+                return o1.getHeight() < o2.getHeight() ? 1 : -1;
+            }
+        });
+
         return leafNodes;
 
+    }
+
+    private static boolean exists(ArrayList<State> leafNodes, State f) {
+        for(State s : leafNodes) {
+            if(s.equals(f)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     private Solver() {}

@@ -113,6 +113,11 @@ public class State {
         return new State(this.state);
     }
 
+    /*
+        returns true if there is no more empty buttons on the field
+            or
+        There is already a winner
+    */
     public boolean isLeafNode() {
         int score = 0;
 
@@ -124,7 +129,7 @@ public class State {
             }
         }
 
-        return score == 9;
+        return (score == 9) || (!this.getWinner().equals(""));
     }
 
     public int getHeight() {
@@ -139,6 +144,10 @@ public class State {
         return this.state;
     }
 
+
+    /*
+        public String getWinner -> Checks the board
+    */
     public String getWinner() {
         String winner = "";
         String value;
@@ -190,6 +199,8 @@ public class State {
         return "";
     }
 
+
+    // Returns checks value and returns X if XXX, O if OOO
     private String checkWinner(String value) {
         if(value.equals("XXX")) {
             return "X";
@@ -200,5 +211,18 @@ public class State {
         else {
             return "";
         }
+    }
+
+    public boolean equals(State s) {
+        int score = 0;
+        for(int i = 0 ; i < 3 ; i++) {
+            for(int j = 0 ; j < 3 ; j++) {
+                if(this.state[i][j].equals(s.getState()[i][j])) {
+                    score++;
+                }
+            }
+        }
+
+        return score == 9;
     }
 }
