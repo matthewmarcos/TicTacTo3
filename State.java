@@ -109,6 +109,19 @@ public class State {
         return new State(this.state);
     }
 
+    public boolean isLeafNode() {
+        int score = 0;
+
+        for(int i = 0 ; i < 3 ; i++) {
+            for(int j = 0 ; j < 3 ; j++) {
+                if(!this.state[i][j].equals("")) {
+                    score++;
+                }
+        }
+
+        return score == 0;
+    }
+
     public int getHeight() {
         return this.height;
     }
