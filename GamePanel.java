@@ -159,12 +159,16 @@ public class GamePanel extends JPanel implements ActionListener{
 
                     // Code prints the next possible moves
                     resultingState.printMe();
-                    System.out.println("childrenStates:");
-                    for(State f: resultingState.getPossibleStates()) {
-                        f.printMe();
-                    }
-
                     this.currentState = resultingState.clone();
+                    // System.out.println("childrenStates:");
+                    // for(State f: resultingState.getPossibleStates()) {
+                    //     f.printMe();
+                    // }
+
+                    System.out.println("Possible End States");
+                    Solver.nextMove(resultingState, character);
+                    turn = (turn == 1) ? 0: 1;
+
                 }
             }
         }
@@ -174,9 +178,18 @@ public class GamePanel extends JPanel implements ActionListener{
         String winner = currentState.getWinner();
         if(!winner.equals("")) {
             JOptionPane.showMessageDialog(null, "Winner: " + winner);
+
+            frame.dispose();
+            GamePanel game = new GamePanel();
+            game.createAndShowGui();
+        } else if(currentState.isLeafNode()) {
+            JOptionPane.showMessageDialog(null, "Draw!");
+
+            frame.dispose();
+            GamePanel game = new GamePanel();
+            game.createAndShowGui();
         }
 
-        turn = (turn == 1) ? 0: 1;
     }
 
     private void showBoardGui(){

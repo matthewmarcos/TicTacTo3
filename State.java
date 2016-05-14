@@ -91,11 +91,10 @@ public class State {
 
         // State constructor
         // Get blank indeces
-        String nextTurn = (this.turn.equals("X")) ? "O": "X";
-
         for(int i = 0 ; i < 3 ; i++) {
             for(int j = 0 ; j < 3 ; j++) {
                 if(this.state[i][j].equals("")) {
+                    String nextTurn = (this.turn.equals("X")) ? "O": "X";
                     tempStates.add(new State(this, i, j, nextTurn));
                 }
             }
@@ -116,9 +115,10 @@ public class State {
                 if(!this.state[i][j].equals("")) {
                     score++;
                 }
+            }
         }
 
-        return score == 0;
+        return score == 9;
     }
 
     public int getHeight() {

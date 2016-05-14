@@ -1,3 +1,7 @@
+import java.awt.*;
+import java.util.*;
+import javax.swing.*;
+
 /*
     This class takes an input state and the turn, and returns
     the next state that would be best for that player.
@@ -11,7 +15,7 @@ public class Solver {
         ArrayList<State> results = new ArrayList<State>();
         ArrayList<State> leafNodes = new ArrayList<State>();
 
-        toExpand.add(f);
+        toExpand.add(in);
 
         // 1) Expand all the possible children of that state.
         while(!toExpand.isEmpty()) {
@@ -19,14 +23,24 @@ public class Solver {
             for(State f : toExpand) {
                 results.addAll(f.getPossibleStates());
             }
-            toExpand.clear()
+
+            toExpand.clear();
 
             // put leaf nodes from results to leafNodes
+            for(State f : results) {
+                if(f.isLeafNode()) {
+                    leafNodes.add(f);
+                }
+            }
 
+            toExpand.addAll(results);
+            results.clear();
         }
 
         // If there is a winning state in that tier, pick it
-
+        for(State f : leafNodes) {
+            f.printMe();
+        }
 
         return new State();
 
