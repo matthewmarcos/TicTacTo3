@@ -86,8 +86,6 @@ public class Solver {
                 childStore.addAll(parent.getChildren());
 
                 for (State child : childStore) {
-                    boolean flag = true;
-
                     if (parent.getTurn().equals("X")) {
                         if (child.getUtility() == -1) {
                             parent.setUtility(-1);
@@ -101,10 +99,8 @@ public class Solver {
                     }
 
                     parent.setUtility(0);
+                    leafNodes.remove(child);
                 }
-
-                for (State leaf : childStore)
-                    leafNodes.remove(leaf);
 
                 parentStore.add(parent);
             }
