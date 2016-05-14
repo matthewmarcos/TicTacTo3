@@ -11,13 +11,23 @@ public class Solver {
     public static State nextMove(State in, String turn) {
 
         State currentState = in;
+        ArrayList<State> leafNodes = getLeafNodes(in);
+
+        // If there is a winning state in that tier, pick it
+        for(State f : leafNodes) {
+            f.printMe();
+        }
+
+        return new State();
+    }
+
+    private static ArrayList<State> getLeafNodes(State in) {
         ArrayList<State> toExpand = new ArrayList<State>();
         ArrayList<State> results = new ArrayList<State>();
         ArrayList<State> leafNodes = new ArrayList<State>();
 
         toExpand.add(in);
 
-        // 1) Expand all the possible children of that state.
         while(!toExpand.isEmpty()) {
             // Expand all states per tier
             for(State f : toExpand) {
@@ -37,12 +47,7 @@ public class Solver {
             results.clear();
         }
 
-        // If there is a winning state in that tier, pick it
-        for(State f : leafNodes) {
-            f.printMe();
-        }
-
-        return new State();
+        return leafNodes;
 
     }
 
