@@ -142,6 +142,13 @@ public class GamePanel extends JPanel implements ActionListener{
 
     public void resetState() {
         currentState = new State();
+
+        if (turn == 2) {
+            Random rand = new Random();
+            int x = rand.nextInt(3);
+            int y = rand.nextInt(3);
+            currentState = new State(currentState, x, y, "X");
+        }
     }
 
     public void actionPerformed(ActionEvent e) {

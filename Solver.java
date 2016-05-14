@@ -9,19 +9,6 @@ import javax.swing.*;
 public class Solver {
 
     public static State nextMove(State in) {
-
-        State currentState = in;
-       /* ArrayList<State> leafNodes = getNextMove(in); 
-
-        // If there is a winning state in that tier, pick it
-        for(State f : leafNodes) {
-            f.printMe();
-        }
-
-        minimax(in).printMe();*/
-
-        //System.out.println("length of leafNodes: " + leafNodes.size());
-
         return getNextMove(in);
     }
 
