@@ -7,16 +7,30 @@ import javax.swing.JButton;
 public class State {
     private String[][] state;
     private int utility;
+    private int height;
     private State parent;
     private String turn;
 
     public State() {
         this.state = new String[3][3];
         this.parent = null;
+        this.height = 0;
 
         for (int i = 0 ; i < 3 ; i++) {
             for(int j = 0 ; j < 3 ; j++) {
                 this.state[i][j] = "";
+            }
+        }
+    }
+
+    public State(String[][] state) {
+        this.state = new String[3][3];
+        this.parent = null;
+        this.height = 0;
+
+        for (int i = 0 ; i < 3 ; i++) {
+            for(int j = 0 ; j < 3 ; j++) {
+                this.state[i][j] = new String(state[i][j]);
             }
         }
     }
@@ -31,6 +45,7 @@ public class State {
     public State(State parent, int x, int y, String value) {
         this.state = new String[3][3];
         this.parent = parent;
+        this.height = parent.getHeight() + 1;
 
         for (int i = 0 ; i < 3 ; i++) {
             for(int j = 0 ; j < 3 ; j++) {
@@ -57,6 +72,7 @@ public class State {
         System.out.println("");
         System.out.println("Turn: " + this.turn);
         System.out.println("Utility: " + this.utility);
+        System.out.println("height: " + this.height);
 
         for(int i = 0 ; i < 3 ; i++) {
             for(int j = 0 ; j < 3 ; j++) {
@@ -87,6 +103,14 @@ public class State {
         }
 
         return tempStates;
+    }
+
+    public State clone() {
+        return new State(this.state);
+    }
+
+    public int getHeight() {
+        return this.height;
     }
 
     public String getTurn() {
