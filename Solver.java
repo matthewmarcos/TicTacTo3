@@ -18,7 +18,9 @@ public class Solver {
             f.printMe();
         }
 
-        System.out.println("length of leafNodes: " + leafNodes.size());
+        minMaxAlgo(leafNodes, in).printMe();
+
+        //System.out.println("length of leafNodes: " + leafNodes.size());
 
         return new State();
     }
@@ -63,8 +65,74 @@ public class Solver {
             }
         });
 
-        return leafNodes;
+        // Set states of each leaf node
+        for (State state : leafNodes) {
+            state.setUtility(updateUtility(state));
+        }
 
+        return leafNodes;
+    }
+
+    public static State minMaxAlgo(ArrayList<State> leafNodes, State currentState) {
+        ArrayList<State> parentStore = new ArrayList<State>();
+        ArrayList<State> childStore = new ArrayList<State>();
+
+        while (leafNodes.get(0).getParent() != currentState) {
+            parentStore.clear();
+            while (leafNodes.size() > 0) {
+                childStore.clear();
+                State parent = leafNodes.get(0).getParent();
+
+                for (State child : leafNodes) { // Get children of the parent
+                    if (parent.getChildren().contains(child)) {
+                        childStore.add(child);
+                    }
+                }
+
+                for (State child : childStore) {
+                    boolean flag = true;
+
+                    if (parent.getTurn().equals("X")) {
+                        if (child.getUtility() == -1) {
+                            parent.setUtility(-1);
+                            break;
+                        } else if (child.getUtility() == 0) {
+                            parent.setUtility(0);
+                        }
+                    } else {
+                        if (child.getUtility() == 1) {
+                            parent.setUtility(1);
+                            break;
+                        } else if (child.getUtility() == 0) {
+                            parent.setUtility(0);
+                        }
+                    }
+                }
+
+                parentStore.add(leafNodes.remove(0));
+            }
+
+            leafNodes.clear();
+            leafNodes.addAll(parentStore);
+        }
+
+        return leafNodes.get(0);
+    }
+
+    /* 
+        Updates the utility of a state
+        1    Winner is X
+        0    Draw
+        -1   Winner is O
+    */
+    public static int updateUtility(State state) {
+        if (!(state.getWinner().equals(""))) {
+            if (state.getWinner().equals("X")) {
+                return 1;
+            } else return -1;
+        }
+
+        return 0;
     }
 
     private static boolean exists(ArrayList<State> leafNodes, State f) {
