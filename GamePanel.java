@@ -40,13 +40,13 @@ public class GamePanel extends JPanel implements ActionListener{
         // Creates the starting panel
         JButton p1Button = new JButton();
         JButton p2Button = new JButton();
-        JLabel turnLabel = new JLabel("Choose your turn:");
+        JLabel turnLabel = new JLabel("Do you want to go first?");
         turnLabel.setFont(new Font("Arial", Font.PLAIN, 30));
         turnLabel.setPreferredSize(new Dimension(200, 200));
         turnLabel.setForeground(Color.white);
         p1Button.setFont(new Font("Arial", Font.PLAIN, 20));
         p1Button.setBackground(new Color(250, 250, 250));
-        p1Button.setText("Player 1");
+        p1Button.setText("Yes");
         p1Button.setPreferredSize(new Dimension(200, 50));
         p1Button.addMouseListener(new MouseListener() {
             public void mouseClicked(MouseEvent ev){
@@ -64,7 +64,7 @@ public class GamePanel extends JPanel implements ActionListener{
 
         p2Button.setFont(new Font("Arial", Font.PLAIN, 20));
         p2Button.setBackground(new Color(250, 250, 250));
-        p2Button.setText("Player 2");
+        p2Button.setText("No");
         p2Button.setPreferredSize(new Dimension(200, 50));
         p2Button.addMouseListener(new MouseListener() {
             public void mouseClicked(MouseEvent ev){
@@ -108,8 +108,6 @@ public class GamePanel extends JPanel implements ActionListener{
     }
 
     public void createBoardGui() {
-        System.out.println(turn);
-
         // Create the tiles
         this.removeAll();
 
@@ -156,13 +154,10 @@ public class GamePanel extends JPanel implements ActionListener{
                 ((JButton)e.getSource()).getText().equals("")){
                     String character = (turn == 1) ? "X" : "O";
                     State resultingState = new State(currentState, i, j, character);
-
-                    // Code prints the next possible moves
-                    resultingState.printMe();
                     this.currentState = resultingState.clone();
-                    Solver.nextMove(resultingState, character);
-                    turn = (turn == 1) ? 0: 1;
-                    System.out.println("==============================================");
+
+                    if (!currentState.isLeafNode()) 
+                        currentState = Solver.nextMove(resultingState);
                 }
             }
         }
