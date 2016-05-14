@@ -1,7 +1,6 @@
-import java.awt.Point;
-import java.util.ArrayList;
-import java.util.Random;
-import javax.swing.JButton;
+import java.awt.*;
+import java.util.*;
+import javax.swing.*;
 
 
 public class State {
