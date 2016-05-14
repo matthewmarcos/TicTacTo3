@@ -131,6 +131,14 @@ public class State {
         return this.height;
     }
 
+    public int getUtility() {
+        return this.utility;
+    }
+
+    public void setUtility(int utility) {
+        this.utility = utility;
+    }
+
     public String getTurn() {
         return new String(this.turn);
     }
