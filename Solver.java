@@ -11,7 +11,7 @@ public class Solver {
     public static State nextMove(State in, String turn) {
 
         State currentState = in;
-        ArrayList<State> leafNodes = getLeafNodes(in);
+        ArrayList<State> leafNodes = getLeafNodes(in); 
 
         // If there is a winning state in that tier, pick it
         for(State f : leafNodes) {
@@ -65,7 +65,7 @@ public class Solver {
             }
         });
 
-        // Set states of each leaf node
+        // Set utility of each leaf node
         for (State state : leafNodes) {
             state.setUtility(updateUtility(state));
         }
@@ -83,11 +83,7 @@ public class Solver {
                 childStore.clear();
                 State parent = leafNodes.get(0).getParent();
 
-                for (State child : leafNodes) { // Get children of the parent
-                    if (parent.getChildren().contains(child)) {
-                        childStore.add(child);
-                    }
-                }
+                childStore.addAll(parent.getChildren());
 
                 for (State child : childStore) {
                     boolean flag = true;
@@ -96,20 +92,21 @@ public class Solver {
                         if (child.getUtility() == -1) {
                             parent.setUtility(-1);
                             break;
-                        } else if (child.getUtility() == 0) {
-                            parent.setUtility(0);
                         }
-                    } else {
+                    } else if (parent.getTurn().equals("O")) {
                         if (child.getUtility() == 1) {
                             parent.setUtility(1);
                             break;
-                        } else if (child.getUtility() == 0) {
-                            parent.setUtility(0);
                         }
                     }
+
+                    parent.setUtility(0);
                 }
 
-                parentStore.add(leafNodes.remove(0));
+                for (State leaf : childStore)
+                    leafNodes.remove(leaf);
+
+                parentStore.add(parent);
             }
 
             leafNodes.clear();
