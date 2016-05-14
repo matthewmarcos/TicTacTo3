@@ -136,6 +136,14 @@ public class State {
         return this.height;
     }
 
+    public int getUtility() {
+        return this.utility;
+    }
+
+    public void setUtility(int utility) {
+        this.utility = utility;
+    }
+
     public String getTurn() {
         return new String(this.turn);
     }
@@ -144,6 +152,13 @@ public class State {
         return this.state;
     }
 
+    public State getParent() {
+        return this.parent;
+    }
+
+    public ArrayList<State> getChildren() {
+        return this.children;
+    }
 
     /*
         public String getWinner -> Checks the board
