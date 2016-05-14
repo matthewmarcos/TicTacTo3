@@ -47,8 +47,34 @@ public class Solver {
             results.clear();
         }
 
+        for (State state : leafNodes) {
+            state.setUtility(updateUtility(state));
+        }
+
         return leafNodes;
 
+    }
+
+    public State minMaxAlgo() {
+        for (State state : leafNodes) {
+            
+        }
+    }
+
+    /* 
+        Updates the utility of a state
+        1    Winner is X
+        0    Draw
+        -1   Winner is O
+    */
+    public int updateUtility(State state) {
+        if (!(state.getWinner().equals(""))) {
+            if (state.getWinner().equals("X")) {
+                return 1;
+            } else return -1;
+        }
+
+        return 0;
     }
 
     private Solver() {}
