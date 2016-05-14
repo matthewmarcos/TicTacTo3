@@ -18,6 +18,8 @@ public class Solver {
             f.printMe();
         }
 
+        System.out.println("length of leafNodes: " + leafNodes.size());
+
         return new State();
     }
 
@@ -38,10 +40,16 @@ public class Solver {
 
             // put leaf nodes from results to leafNodes
             for(State f : results) {
-                if(f.isLeafNode() || !exists(leafNodes, f)) {
+                // Make sure it is a leaf node and it does not exist
+                if(f.isLeafNode() && !exists(leafNodes, f)) {
                     leafNodes.add(f);
                 }
             }
+
+            for(State f : leafNodes) {
+                results.remove(f);
+            }
+
 
             toExpand.addAll(results);
             results.clear();

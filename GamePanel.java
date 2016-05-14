@@ -157,7 +157,8 @@ public class GamePanel extends JPanel implements ActionListener{
                     String character = (turn == 1) ? "X" : "O";
                     State resultingState = new State(currentState, i, j, character);
                     this.currentState = resultingState.clone();
-                    // Solver.nextMove(resultingState, character);
+
+                    Solver.nextMove(resultingState, character);
 
                     turn = (turn == 1) ? 0: 1;
                     System.out.println("==============================================");
